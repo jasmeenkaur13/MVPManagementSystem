@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CarSalesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AdvertisedCars">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Year" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="Make" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Model" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AdvertisedPriceType" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="ECGAmount" Type="numeric" Precision="10" Scale="2" />
+    <Property Name="DAPAmount" Type="numeric" Precision="10" Scale="2" />
+    <Property Name="AdvertisedAmount" Type="numeric" Precision="16" Scale="2" />
+  </EntityType>
+  <EntityType Name="Enquiry">
+    <Key>
+      <PropertyRef Name="EnquiryId" />
+    </Key>
+    <Property Name="EnquiryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CarId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Owners">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="10" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="DealerABN" Type="varchar" MaxLength="50" />
+    <Property Name="OwnerType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Owners_Cars_Ref">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OwnerId" Type="int" Nullable="false" />
+    <Property Name="CarId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Car_Enquiry">
+    <End Role="AdvertisedCars" Type="Self.AdvertisedCars" Multiplicity="1" />
+    <End Role="Enquiry" Type="Self.Enquiry" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AdvertisedCars">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Enquiry">
+        <PropertyRef Name="CarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Car_Owner_Ref">
+    <End Role="AdvertisedCars" Type="Self.AdvertisedCars" Multiplicity="1" />
+    <End Role="Owners_Cars_Ref" Type="Self.Owners_Cars_Ref" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AdvertisedCars">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Owners_Cars_Ref">
+        <PropertyRef Name="CarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owner_Car_Ref">
+    <End Role="Owners" Type="Self.Owners" Multiplicity="1" />
+    <End Role="Owners_Cars_Ref" Type="Self.Owners_Cars_Ref" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Owners">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Owners_Cars_Ref">
+        <PropertyRef Name="OwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CarSalesModelStoreContainer">
+    <EntitySet Name="AdvertisedCars" EntityType="Self.AdvertisedCars" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Enquiry" EntityType="Self.Enquiry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Owners_Cars_Ref" EntityType="Self.Owners_Cars_Ref" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Car_Enquiry" Association="Self.FK_Car_Enquiry">
+      <End Role="AdvertisedCars" EntitySet="AdvertisedCars" />
+      <End Role="Enquiry" EntitySet="Enquiry" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Car_Owner_Ref" Association="Self.FK_Car_Owner_Ref">
+      <End Role="AdvertisedCars" EntitySet="AdvertisedCars" />
+      <End Role="Owners_Cars_Ref" EntitySet="Owners_Cars_Ref" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owner_Car_Ref" Association="Self.FK_Owner_Car_Ref">
+      <End Role="Owners" EntitySet="Owners" />
+      <End Role="Owners_Cars_Ref" EntitySet="Owners_Cars_Ref" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CarSalesModelStoreContainer" CdmEntityContainer="CarSalesEntities">
+    <EntitySetMapping Name="AdvertisedCars">
+      <EntityTypeMapping TypeName="CarSalesModel.AdvertisedCar">
+        <MappingFragment StoreEntitySet="AdvertisedCars">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Make" ColumnName="Make" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="AdvertisedPriceType" ColumnName="AdvertisedPriceType" />
+          <ScalarProperty Name="ECGAmount" ColumnName="ECGAmount" />
+          <ScalarProperty Name="DAPAmount" ColumnName="DAPAmount" />
+          <ScalarProperty Name="AdvertisedAmount" ColumnName="AdvertisedAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Owners">
+      <EntityTypeMapping TypeName="CarSalesModel.Owner">
+        <MappingFragment StoreEntitySet="Owners">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="DealerABN" ColumnName="DealerABN" />
+          <ScalarProperty Name="OwnerType" ColumnName="OwnerType" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Owners_Cars_Ref">
+      <EntityTypeMapping TypeName="CarSalesModel.Owners_Cars_Ref">
+        <MappingFragment StoreEntitySet="Owners_Cars_Ref">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+          <ScalarProperty Name="CarId" ColumnName="CarId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Enquiries">
+      <EntityTypeMapping TypeName="CarSalesModel.Enquiry">
+        <MappingFragment StoreEntitySet="Enquiry">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CarId" ColumnName="CarId" />
+          <ScalarProperty Name="EnquiryId" ColumnName="EnquiryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

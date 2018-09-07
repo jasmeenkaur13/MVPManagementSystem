@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CarSalesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdvertisedCars">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Make" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Model" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AdvertisedPriceType" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="ECGAmount" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="DAPAmount" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="AdvertisedAmount" Type="numeric" Precision="16" Scale="2" />
+        </EntityType>
+        <EntityType Name="Enquiry">
+          <Key>
+            <PropertyRef Name="EnquiryId" />
+          </Key>
+          <Property Name="EnquiryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Owners">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="10" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="DealerABN" Type="varchar" MaxLength="50" />
+          <Property Name="OwnerType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Owners_Cars_Ref">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OwnerId" Type="int" Nullable="false" />
+          <Property Name="CarId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Car_Enquiry">
+          <End Role="AdvertisedCars" Type="Self.AdvertisedCars" Multiplicity="1" />
+          <End Role="Enquiry" Type="Self.Enquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdvertisedCars">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Enquiry">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Car_Owner_Ref">
+          <End Role="AdvertisedCars" Type="Self.AdvertisedCars" Multiplicity="1" />
+          <End Role="Owners_Cars_Ref" Type="Self.Owners_Cars_Ref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdvertisedCars">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Owners_Cars_Ref">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Owner_Car_Ref">
+          <End Role="Owners" Type="Self.Owners" Multiplicity="1" />
+          <End Role="Owners_Cars_Ref" Type="Self.Owners_Cars_Ref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Owners_Cars_Ref">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarSalesModelStoreContainer">
+          <EntitySet Name="AdvertisedCars" EntityType="Self.AdvertisedCars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Enquiry" EntityType="Self.Enquiry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Owners_Cars_Ref" EntityType="Self.Owners_Cars_Ref" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Car_Enquiry" Association="Self.FK_Car_Enquiry">
+            <End Role="AdvertisedCars" EntitySet="AdvertisedCars" />
+            <End Role="Enquiry" EntitySet="Enquiry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Car_Owner_Ref" Association="Self.FK_Car_Owner_Ref">
+            <End Role="AdvertisedCars" EntitySet="AdvertisedCars" />
+            <End Role="Owners_Cars_Ref" EntitySet="Owners_Cars_Ref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Owner_Car_Ref" Association="Self.FK_Owner_Car_Ref">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="Owners_Cars_Ref" EntitySet="Owners_Cars_Ref" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CarSalesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdvertisedCar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Make" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AdvertisedPriceType" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ECGAmount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="DAPAmount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="AdvertisedAmount" Type="Decimal" Precision="16" Scale="2" />
+          <NavigationProperty Name="Owners_Cars_Ref" Relationship="Self.FK_Car_Owner_Ref" FromRole="AdvertisedCars" ToRole="Owners_Cars_Ref" />
+          <NavigationProperty Name="Enquiries" Relationship="CarSalesModel.FK_Car_Enquiry" FromRole="AdvertisedCar" ToRole="Enquiry" />
+        </EntityType>
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DealerABN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OwnerType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Owners_Cars_Ref" Relationship="Self.FK_Owner_Car_Ref" FromRole="Owners" ToRole="Owners_Cars_Ref" />
+        </EntityType>
+        <EntityType Name="Owners_Cars_Ref">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="CarId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AdvertisedCar" Relationship="Self.FK_Car_Owner_Ref" FromRole="Owners_Cars_Ref" ToRole="AdvertisedCars" />
+          <NavigationProperty Name="Owner" Relationship="Self.FK_Owner_Car_Ref" FromRole="Owners_Cars_Ref" ToRole="Owners" />
+        </EntityType>
+        <Association Name="FK_Car_Owner_Ref">
+          <End Role="AdvertisedCars" Type="Self.AdvertisedCar" Multiplicity="1" />
+          <End Role="Owners_Cars_Ref" Type="Self.Owners_Cars_Ref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdvertisedCars">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Owners_Cars_Ref">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Owner_Car_Ref">
+          <End Role="Owners" Type="Self.Owner" Multiplicity="1" />
+          <End Role="Owners_Cars_Ref" Type="Self.Owners_Cars_Ref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Owners_Cars_Ref">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarSalesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdvertisedCars" EntityType="Self.AdvertisedCar" />
+          <EntitySet Name="Owners" EntityType="Self.Owner" />
+          <EntitySet Name="Owners_Cars_Ref" EntityType="Self.Owners_Cars_Ref" />
+          <AssociationSet Name="FK_Car_Owner_Ref" Association="Self.FK_Car_Owner_Ref">
+            <End Role="AdvertisedCars" EntitySet="AdvertisedCars" />
+            <End Role="Owners_Cars_Ref" EntitySet="Owners_Cars_Ref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Owner_Car_Ref" Association="Self.FK_Owner_Car_Ref">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="Owners_Cars_Ref" EntitySet="Owners_Cars_Ref" />
+          </AssociationSet>
+          <EntitySet Name="Enquiries" EntityType="CarSalesModel.Enquiry" />
+          <AssociationSet Name="FK_Car_Enquiry" Association="CarSalesModel.FK_Car_Enquiry">
+            <End Role="AdvertisedCar" EntitySet="AdvertisedCars" />
+            <End Role="Enquiry" EntitySet="Enquiries" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Enquiry">
+          <Key>
+            <PropertyRef Name="EnquiryId" />
+          </Key>
+          <Property Name="EnquiryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AdvertisedCar" Relationship="CarSalesModel.FK_Car_Enquiry" FromRole="Enquiry" ToRole="AdvertisedCar" />
+        </EntityType>
+        <Association Name="FK_Car_Enquiry">
+          <End Type="CarSalesModel.AdvertisedCar" Role="AdvertisedCar" Multiplicity="1" />
+          <End Type="CarSalesModel.Enquiry" Role="Enquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdvertisedCar">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Enquiry">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CarSalesModelStoreContainer" CdmEntityContainer="CarSalesEntities">
+          <EntitySetMapping Name="AdvertisedCars">
+            <EntityTypeMapping TypeName="CarSalesModel.AdvertisedCar">
+              <MappingFragment StoreEntitySet="AdvertisedCars">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Make" ColumnName="Make" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="AdvertisedPriceType" ColumnName="AdvertisedPriceType" />
+                <ScalarProperty Name="ECGAmount" ColumnName="ECGAmount" />
+                <ScalarProperty Name="DAPAmount" ColumnName="DAPAmount" />
+                <ScalarProperty Name="AdvertisedAmount" ColumnName="AdvertisedAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Owners">
+            <EntityTypeMapping TypeName="CarSalesModel.Owner">
+              <MappingFragment StoreEntitySet="Owners">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DealerABN" ColumnName="DealerABN" />
+                <ScalarProperty Name="OwnerType" ColumnName="OwnerType" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Owners_Cars_Ref">
+            <EntityTypeMapping TypeName="CarSalesModel.Owners_Cars_Ref">
+              <MappingFragment StoreEntitySet="Owners_Cars_Ref">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="CarId" ColumnName="CarId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enquiries">
+            <EntityTypeMapping TypeName="CarSalesModel.Enquiry">
+              <MappingFragment StoreEntitySet="Enquiry">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CarId" ColumnName="CarId" />
+                <ScalarProperty Name="EnquiryId" ColumnName="EnquiryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
