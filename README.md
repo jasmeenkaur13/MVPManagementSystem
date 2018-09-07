@@ -33,25 +33,31 @@ Vehicle Management system
 {
   "CarDetails": {
     "ID": 1,
-    "Year": "sample string 2",
+    "Year": "2017",
     "Make": "sample string 3",
     "Model": "sample string 4",
-    "AdvertisedPriceType": "sample string 5",
+    "AdvertisedPriceType": "DCG",
     "ECGAmount": 6.0,
     "DAPAmount": 7.0,
     "AdvertisedAmount": 8.0
   },
   "OwnerDetails": {
     "Id": 1,
-    "Name": "",
+    "Name": "Jasmeen",
     "PhoneNumber": "sample string 3",
     "Email": "sample string 4",
     "DealerABN": "sample string 5",
-    "OwnerType": "sample string 6",
+    "OwnerType": "P",
     "Comments": "sample string 7"
   }
 }
 *	Enquiry
+{
+    "CarId": 2,
+    "Name": "",
+    "PhoneNumber": "3123456789",
+    "Email": "absf@gmail.com"
+  }
 
 ## Areas of Improvements
 - Integration Test cases will be of great help here.

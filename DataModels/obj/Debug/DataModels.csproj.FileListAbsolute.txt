@@ -64,6 +64,7 @@ C:\test\MVPManagementSystem\DataModels\bin\Debug\log4net.xml
 C:\test\MVPManagementSystem\DataModels\bin\Debug\Newtonsoft.Json.xml
 C:\test\MVPManagementSystem\DataModels\bin\Debug\System.Net.Http.Formatting.xml
 C:\test\MVPManagementSystem\DataModels\bin\Debug\System.Web.Http.xml
+C:\test\MVPManagementSystem\DataModels\obj\Debug\DataModels.csprojAssemblyReference.cache
 C:\test\MVPManagementSystem\DataModels\obj\Debug\DataModels.csproj.CoreCompileInputs.cache
 C:\test\MVPManagementSystem\DataModels\obj\Debug\DataModels.csproj.CopyComplete
 C:\test\MVPManagementSystem\DataModels\obj\Debug\DataModels.dll
